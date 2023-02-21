@@ -96,13 +96,13 @@ function transformUrl(websiteUrl) {
  *   },
  * ]
  */
-async function transformData(data) {
+function transformData(data) {
     const transformation = [];
 
     const timestamp = data.ts;
     const url_object = transformUrl(data.u);
 
-    await data.e.forEach((event) => {
+    data.e.forEach((event) => {
         transformation.push({
             timestamp,
             url_object,
@@ -154,7 +154,7 @@ async function extractTransformLoad() {
                 try {
                     const fileNameWithoutExtension = file.slice(0, -8);
                     const parsedData = await parseJsonGz(`./input/${file}`);
-                    const jsonToOutput = await transformData(parsedData);
+                    const jsonToOutput = transformData(parsedData);
                     await saveTransformedData(
                         fileNameWithoutExtension,
                         jsonToOutput
